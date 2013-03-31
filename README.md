@@ -1,4 +1,4 @@
-# slow-query.sh
+# slow-query
 
 ## About
 
@@ -25,12 +25,12 @@ mysqladminコマンドを実行させるために、rootユーザーのパスワ
 
 一般ユーザーが読めないように所有者とパーミッションを変更します。
 
-    # chown root.wheel /usr/local/etc/my.cnf
-    # chmod 640 /usr/local/etc/my.cnf
+    # chown mysql.wheel /usr/local/etc/my.cnf
+    # chmod 660 /usr/local/etc/my.cnf
 
 ## Usage
 
-    # slow-query -m foo@example.com -c /usr/local/etc/my.cnf -l /var/log/mysql/slow_query.log
+    # /usr/local/bin/slow-query -m foo@example.com -c /usr/local/etc/my.cnf -l /var/log/mysql/slow_query.log
 
 コマンドに与える引数は3つです（すべて必須）。
 
@@ -41,4 +41,4 @@ mysqladminコマンドを実行させるために、rootユーザーのパスワ
 crontabを設定するときは、mysqlユーザーで実行させるようにしてください。
 
     # crontab -u mysql -l
-    0 4 * * * slow-query -m foo@example.com -c /usr/local/etc/my.cnf -l /var/log/mysql/slow_query.log 2>/dev/null
+    0 4 * * * /usr/local/bin/slow-query -m foo@example.com -c /usr/local/etc/my.cnf -l /var/log/mysql/slow_query.log 2>/dev/null
