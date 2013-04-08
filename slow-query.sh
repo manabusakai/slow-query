@@ -59,9 +59,11 @@ else
 fi
 
 if [ -s $LOG_FILE ]; then
-    $MYSQL_DUMP_SLOW $LOG_FILE | mail -s 'Slow Query for '$HOSTNAME $MAILTO
-    mv $LOG_FILE $LOG_FILE.$CURRENT_DATE
-    $MYSQL_ADMIN --defaults-extra-file=$CNF_FILE flush-logs
+    if grep '^# Time:' $LOG_FILE >/dev/null; then
+        $MYSQL_DUMP_SLOW $LOG_FILE | mail -s 'Slow Query for '$HOSTNAME $MAILTO
+        mv $LOG_FILE $LOG_FILE.$CURRENT_DATE
+        $MYSQL_ADMIN --defaults-extra-file=$CNF_FILE flush-logs
+    fi
 fi
 
 exit 0
